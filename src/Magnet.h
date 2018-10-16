@@ -5,7 +5,7 @@
 
 #include "Adafruit_PWMServoDriver.h"
 
-Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+Adafruit_PWMServoDriver pwmDriver = Adafruit_PWMServoDriver();
 
 class Magnet 
 {
@@ -31,19 +31,19 @@ Magnet::Magnet(int pin = 0)
 
 void Magnet::begin()
 {
-    pwm.begin();
-    pwm.setPWMFreq(_freq);
+    pwmDriver.begin();
+    pwmDriver.setPWMFreq(_freq);
 }
 
 void Magnet::setFrequency(int freq)
 {
-    pwm.setPWMFreq(freq);
+    pwmDriver.setPWMFreq(freq);
 }
 
 void Magnet::write(int value)
 {
     _value = value;
-    pwm.setPin(_pin, value);
+    pwmDriver.setPin(_pin, value);
 }
 
 int Magnet::read()
