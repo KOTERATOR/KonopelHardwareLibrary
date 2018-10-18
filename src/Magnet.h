@@ -10,10 +10,12 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 class Magnet 
 {
     private:
+    int _offValue = 0;
     int _pin = 0;
     int _value = 0;
     int _freq = DEFAULT_PWM_FREQ;
-    
+
+    bool _on = true;
 
     public:
     Magnet(int pin);
@@ -22,6 +24,9 @@ class Magnet
     void write(int value);
     int read();
     void setFrequency(int freq);
+
+    void on();
+    void off();
 };
 
 Magnet::Magnet(int pin = 0)
@@ -43,12 +48,31 @@ void Magnet::setFrequency(int freq)
 void Magnet::write(int value)
 {
     _value = value;
-    pwm.setPin(_pin, value);
+    if(_on)
+    {
+        pwm.setPin(_pin, value);
+    }
+    else
+    {
+        _offValue = value;
+    }
 }
 
 int Magnet::read()
 {
     return _value;
+}
+
+void Magnet::on()
+{
+    _on = true;
+    write(_offValue);
+}
+
+void Magnet::off()
+{
+    write(0);
+    _on = false;
 }
 
 #endif
