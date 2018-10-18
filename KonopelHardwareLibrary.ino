@@ -9,8 +9,6 @@ void setup()
     delay(5000);
     Serial.println("STARTED");
     m.begin();
-    //pwm.begin();
-    //pwm.setPWMFreq(48);
 }
 
 void loop()
