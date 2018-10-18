@@ -9,9 +9,16 @@ void onPedalClick()
     Serial.println("PEDAL");
     if(Switch.isUp())
     {
-        magnet.on();
-        
+        if(magnet.isOn)
+        {
+            magnet.off();
+        }
+        else
+        {
+            magnet.on();
+        }
     }
+    
 }
 
 void onSwitchClick()

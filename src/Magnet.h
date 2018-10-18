@@ -15,10 +15,12 @@ class Magnet
     int _value = 0;
     int _freq = DEFAULT_PWM_FREQ;
 
-    bool _on = true;
+    
 
     public:
     Magnet(int pin);
+
+    bool isOn = true;
 
     void begin();
     void write(int value);
@@ -48,7 +50,7 @@ void Magnet::setFrequency(int freq)
 void Magnet::write(int value)
 {
     _value = value;
-    if(_on)
+    if(isOn)
     {
         pwm.setPin(_pin, value);
     }
@@ -65,14 +67,14 @@ int Magnet::read()
 
 void Magnet::on()
 {
-    _on = true;
+    isOn = true;
     write(_offValue);
 }
 
 void Magnet::off()
 {
     write(0);
-    _on = false;
+    isOn = false;
 }
 
 #endif
