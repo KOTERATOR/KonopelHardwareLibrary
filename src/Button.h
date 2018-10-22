@@ -10,21 +10,22 @@ class Button
     private:
     int _pin,
         prevMillis = 0;
-    bool _isDown = false;
+    bool _isDown = false, _invert = false;
     void (*onClickFunc)();
 
     public:
 
-    Button(int pin);
+    Button(int pin, bool invert);
     void check();
     void onClick(void(*onClickFunc)());
     bool isDown();
     bool isUp();
 };
 
-Button::Button(int pin)
+Button::Button(int pin, bool invert = false)
 {
     _pin = pin;
+    _invert = invert;
     pinMode(_pin, INPUT_PULLUP);
 }
 
@@ -39,7 +40,8 @@ void Button::check()
     if(currentMillis - prevMillis >= RATTLING_INTERVAL)
     {
         bool prev = _isDown;
-        _isDown = !digitalRead(_pin);
+        bool value = !digitalRead(_pin);
+        _isDown = _invert ? !value : value;
         if(_isDown == true && prev == false)
         {
             onClickFunc();
